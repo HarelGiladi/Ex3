@@ -2,10 +2,10 @@ import math
 
 
 class GLocation:
-    def __init__(self, x: float = 0, y: float = 0, z: float = 0):
-        self.x = x
-        self.y = y
-        self.z = z
+    def __init__(self, pos:tuple=(0,0,0)):
+        self.x = pos[0]
+        self.y = pos[1]
+        self.z = pos[2]
 
     def distance(self, other):
         tempx = math.pow((self.x - other.x), 2)
