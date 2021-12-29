@@ -8,5 +8,7 @@ class Edge:
         self.tag = -1
 
     def __str__(self):
-        return "Edge{src= "+self.src+", dest= "+self.dst+", weight= "+self.weight+"}"
-    
+        return "Edge{src= " + self.src + ", dest= " + self.dst + ", weight= " + self.weight + "}"
+
+    def __repr__(self):
+        return "Edge{src= " + str(self.src) + ", dest= " + str(self.dst) + ", weight= " + str(self.weight) + "}"
