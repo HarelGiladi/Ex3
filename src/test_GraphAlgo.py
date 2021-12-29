@@ -1,29 +1,3 @@
-# import unittest
-# from unittest import TestCase
-# from GraphAlgo import GraphAlgo
-#
-#
-# class Test(TestCase):
-#
-#     def test_graph_algo(self):
-#         self.fail()
-#
-#     def test_1000json(self):
-#         # test save&load:
-#         file_path = "data/1000Nodes.json"
-#         # test_path = "../data/testSave.json"
-#         graphAlgo = GraphAlgo()
-#         graphAlgo.load_from_json(file_path)
-#         # self.assertTrue(graphAlgo.load_from_json(file_path))
-#         # self.assertTrue(graphAlgo.save_to_json(test_path))
-#
-#         # test center:
-#         self.assertEqual((362, 1185.9594924690523), graphAlgo.centerPoint())
-#
-# if __name__ == '__main__':
-#     unittest.main()
-import unittest
-from os import system
 from unittest import TestCase
 
 from src.DiGraph import DiGraph
