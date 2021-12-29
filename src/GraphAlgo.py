@@ -13,8 +13,12 @@ from src.GraphAlgoInterface import GraphAlgoInterface
 from src.GraphInterface import GraphInterface
 import copy
 
+"""
+A Breadth-first search  - return true iff 
+we can have a path from the given node to all the other nodes in the given graph
+"""
 
-# need to be change!!
+
 def bfs(n: Node, graph: DiGraph) -> bool:
     q = []
     n.info = "black"
@@ -40,17 +44,12 @@ class GraphAlgo(GraphAlgoInterface):
     def get_graph(self) -> GraphInterface:
         return self.graph
 
+    """   Loads a graph from a json file.
+          @param file_name: The path to the json file
+          @returns True if the loading was successful, False o.w.
+    """
+
     def load_from_json(self, file_name: str) -> bool:
-        # with open(file_name, 'r') as f:
-        #     data = json.load(f)
-        # l_nodes = data["Nodes"]
-        # l_edges = data["Edges"]
-        # for dic_nodes in l_nodes:
-        #     pos = dic_nodes["pos"].split(',')
-        #     self.graph.add_node(dic_nodes['id'], (float(pos[0]), float(pos[1]), float(pos[2])))
-        # for dic_edges in l_edges:
-        #     self.graph.add_edge(dic_edges['src'], dic_edges['dest'], dic_edges['w'])
-        # return True
         try:
             with open(file_name, 'r') as file:
                 data = json.load(file)
@@ -72,6 +71,12 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
         return True
+
+    """
+            Saves the graph in JSON format to a file
+            @param file_name: The path to the out file
+            @return: True if the save was successful, False o.w.
+    """
 
     def save_to_json(self, file_name: str) -> bool:
         node = []
@@ -99,6 +104,13 @@ class GraphAlgo(GraphAlgoInterface):
             return False
         return True
 
+    """ 
+    We will use bfs algorithm which checks if it is possible to reach from any vertex to any vertex.
+    for a specific vertex if the whole graph is painted black and so is the converse graph with the same vertex
+    then the graph isConnected
+    return true if and only if (iff) there is a valid path from each node to each 
+    """
+
     def is_connected(self) -> bool:
         if self.graph.v_size() == 0:
             return True
@@ -114,6 +126,18 @@ class GraphAlgo(GraphAlgoInterface):
             if v2.info == "white":
                 return False
         return True
+
+    """
+    Returns the shortest path from node id1 to node id2 using Dijkstra's Algorithm
+    @param id1: The start node id
+    @param id2: The end node id
+    @return: The distance of the path, a list of the nodes ids that the path goes through
+    Computes the shortest path between src to dest - as an ordered List
+    This function uses  Dijkstra Algorithm.
+    The algorithm initializes each vertex from whom it came and then we extract while running backwards all the 
+    ancestors of the vertices
+    then return the list in the correct order
+    """
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         ans_list = []
@@ -136,6 +160,17 @@ class GraphAlgo(GraphAlgoInterface):
             ans_list.append(reverse_list[i].key)
         self.origin_all()
         return dist_ans, ans_list
+
+    """
+    Finds the shortest path that visits all the nodes in the list
+    :param node_lst: A list of nodes id's
+    :return: A list of the nodes id's in the path, and the overall distance
+    This function uses shortestPathDist & shortestPath
+    The function run from the first vertex on the list and examines the shortest path to the rest of the vertices.
+    we calculate the path from the first to the vertex we reached in the shortest path from the first.
+    then we continue with that vertex and so on.
+    in each level we Add the path to the ans_list.
+    """
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
         ans_list = []
@@ -160,6 +195,16 @@ class GraphAlgo(GraphAlgoInterface):
             copy_list.remove(node_temp)
             first = node_temp
         return ans_list, dist
+
+    """
+    Finds the node that has the shortest distance to it's farthest node.
+    :return: The nodes id, min-maximum distance
+    This function uses a Dijkstra-algorithm.
+    We will run with a vertex that does not exist.
+    the algorithm initialize all the vertices' weights to the shortest way to them from the source
+    we find the longest way to a target vertex out of the shortest.
+    from all the longest path find the minimum out of it and that will be the center.
+    """
 
     def centerPoint(self) -> (int, float):
         if not self.is_connected():
@@ -189,6 +234,18 @@ class GraphAlgo(GraphAlgoInterface):
         if dist == sys.float_info.max:
             return -1
         return dist
+
+    """
+    This algorithm gets a source and a destination and returns the short way between them.
+    The algorithm does this while going through all the vertices as long as we have not visited them
+    and the edges associated with each vertex.
+    for each vertex we initialized its weight to be the shortest way to reach it from the src and the tag to be from whom we reached it
+    when we finished with a vertex we painted it black.
+    we implemented the algo we learned at algorithms course
+    @param src
+    @param dest
+    @return the shortest path from src to dest
+    """
 
     def dijkstra(self, src: Node, dest: Node):
         shortest = sys.float_info.max
@@ -234,32 +291,19 @@ class GraphAlgo(GraphAlgoInterface):
                         self.graph.nodes.get(edge.dst).tag = temp_node.key
         return
 
-        # if self.graph.nodes.get(str(src)) is None:
-        #     return -1
-        # pq = PriorityQueue()
-        # for node in self.graph.nodes.values():
-        #     if node.key == src:
-        #         node.weight = 0
-        #         node.tag = src
-        #     else:
-        #         node.weight = sys.float_info.max
-        #         node.tag = -1
-        #     pq.put(node)
-        # while not pq.empty():
-        #     temp_node = pq.get()
-        #     if self.graph.edges.get(str(temp_node.key)) is not None:
-        #         for edge in self.graph.edges.get(str(temp_node.key)).values():
-        #             new_weight = temp_node.w + edge.weight
-        #             if new_weight < self.graph.nodes.get(str(edge.dest)).w:
-        #                 self.graph.nodes.get(str(edge.dest)).w = new_weight
-        #                 self.graph.nodes.get(str(edge.dest)).tag = temp_node.key
-        # return 1
+    """
+    initialize all to default
+    """
 
     def origin_all(self):
         for n in self.graph.nodes.values():
             n.info = "White"
             n.tag = -1
             n.weight = sys.float_info.max
+
+    """
+    reverse the graph
+    """
 
     def converse(self) -> DiGraph:
         converese_g = DiGraph()
@@ -271,6 +315,10 @@ class GraphAlgo(GraphAlgoInterface):
             for j in self.graph.edges.get(d).values():
                 converese_g.add_edge(j.dst, j.src, j.weight)
         return converese_g
+
+    """
+    function that shows the graph in graphical way
+    """
 
     def plot_graph(self) -> None:
         x_list = []

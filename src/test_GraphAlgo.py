@@ -48,9 +48,6 @@ class TestGraphAlgo(TestCase):
         file = "../data/T0.json"
         graph_algo.load_from_json(file)
         self.assertFalse(graph_algo.is_connected())
-        file = "../data/NotConnectedG.json"
-        graph_algo.load_from_json(file)
-        self.assertEqual(False, graph_algo.is_connected())
 
     def test_shortest_path(self):
         g = self.simple_graph_generate()
@@ -148,5 +145,3 @@ class TestGraphAlgo(TestCase):
             g.add_edge(i, 10 - i, i * 0.5)
             g.add_edge(i, i + 1, i * 0.5)
         return g
-
-
