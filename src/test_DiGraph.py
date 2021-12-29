@@ -111,4 +111,4 @@ class TestDiGraph(TestCase):
         self.g.add_edge(self.n2.key, self.n1.key, 14.7)
         self.assertEqual(2, self.g.e_size())
         self.g.remove_edge(self.n1.key, self.n2.key)
-        self.assertEquals(1, self.g.e_size())
+        self.assertEqual(1, self.g.e_size())
