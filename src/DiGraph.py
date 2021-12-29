@@ -1,4 +1,3 @@
-
 from src.GraphInterface import GraphInterface
 from Edge import Edge
 from Node import Node
@@ -82,10 +81,11 @@ class DiGraph(GraphInterface):
             self.edges.pop(node_id)
 
         for id1 in self.edges.keys():
-            for id2 in self.edges[id1].keys():
+            for id2 in self.edges.get(id1):
                 if id2 == node_id:
-                    self.edges[id1].pop(node_id)
+                    self.edges.get(id1).pop(node_id)
                     self.SizeOfEdge -= 1
+                    break
 
         self.MC += 1
         return True
