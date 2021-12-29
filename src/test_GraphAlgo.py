@@ -7,10 +7,19 @@ from src.GraphAlgo import GraphAlgo
 class TestGraphAlgo(TestCase):
     g1: GraphAlgo = GraphAlgo()
 
-    def test_load_save_json(self):
-        file_path = '../data/A5.json'
+    def test_load_json(self):
+        file_path = '../data/A0.json'
         ga = GraphAlgo()
         self.assertTrue(ga.load_from_json(file_path))
+        g = ga.get_graph()
+        self.assertEqual(g.__str__(), ga.__str__())
+
+    def test_save_json(self):
+        file_path1 = '../data/A0.json_new'
+        file_path = '../data/A0.json'
+        ga = GraphAlgo()
+        self.assertTrue(ga.load_from_json(file_path))
+        self.assertTrue(ga.save_to_json(file_path1))
         g = ga.get_graph()
         self.assertEqual(g.__str__(), ga.__str__())
 
@@ -24,14 +33,14 @@ class TestGraphAlgo(TestCase):
         self.assertFalse(graph_algo.is_connected())
 
     def test_shortest_path(self):
-        g = self.simple_graph_generate()
+        g = self.simple_graph()
         ga = GraphAlgo(g)
         self.assertTupleEqual((3.0, [1, 2, 3, 7]), ga.shortest_path(1, 7))
         self.assertEqual((float('inf'), []), ga.shortest_path(1, 88))
         self.assertEqual((9.0, [3, 7, 8, 9]), ga.shortest_path(3, 9))
 
     def test_tsp(self):
-        g = self.simple_graph_generate()
+        g = self.simple_graph()
         ga = GraphAlgo(g)
         self.assertTupleEqual(([1, 2, 8], 1.5), ga.TSP([1, 8]))
         self.assertEqual(([7, 8, 9, 1], 12.0), ga.TSP([7, 1]))
@@ -51,8 +60,9 @@ class TestGraphAlgo(TestCase):
             cities2.append(n.key)
         self.assertEqual(22.63446693792369, self.g1.TSP(cities2)[1])
 
+
+
     def test_center_point(self):
-        # test center of A0.json:
         file = "../data/A0.json"
         graph_algo = GraphAlgo()
         b = graph_algo.load_from_json(file)
@@ -60,43 +70,38 @@ class TestGraphAlgo(TestCase):
         self.assertTrue(graph_algo.load_from_json(file))
         self.assertEqual((7, 6.806805834715163), graph_algo.centerPoint())
 
-        # test center of A1.json:
         file = '../data/A1.json'
         graph_algo = GraphAlgo()
         self.assertTrue(graph_algo.load_from_json(file))
         self.assertEqual((8, 9.925289024973141), graph_algo.centerPoint())
 
-        # test center of A2.json:
         file = '../data/A2.json'
         graph_algo = GraphAlgo()
         self.assertTrue(graph_algo.load_from_json(file))
         self.assertEqual((0, 7.819910602212574), graph_algo.centerPoint())
 
-        # test center of A3.json:
         file = '../data/A3.json'
         graph_algo = GraphAlgo()
         self.assertTrue(graph_algo.load_from_json(file))
         self.assertEqual((2, 8.182236568942237), graph_algo.centerPoint())
 
-        # test center of A4.json:
         file = '../data/A4.json'
         graph_algo = GraphAlgo()
         self.assertTrue(graph_algo.load_from_json(file))
         self.assertEqual((6, 8.071366078651435), graph_algo.centerPoint())
 
-        # test center of A5.json:
         file = '../data/A5.json'
         graph_algo = GraphAlgo()
         self.assertTrue(graph_algo.load_from_json(file))
         self.assertEqual((40, 9.291743173960954), graph_algo.centerPoint())
-
+        #
         # file = '../data/1000Nodes.json'
-        # graphAlgo = GraphAlgo()
-        # self.assertTrue(graphAlgo.load_from_json(file))
-        # self.assertEqual((362, 1185.9594924690523), graphAlgo.centerPoint())
+        # graph_algo = GraphAlgo()
+        # self.assertTrue(graph_algo.load_from_json(file))
+        # self.assertEqual((362, 1185.9594924690523), graph_algo.centerPoint())
 
     @staticmethod
-    def simple_graph_generate():
+    def simple_graph():
         """
         DiGraph: |V| = 10	|E| = 16
         {0: (0), 1: (1), 2: (2), 3: (3), 4: (4), 5: (5), 6: (6), 7: (7), 8: (8), 9: (9)}
