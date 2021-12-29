@@ -1,8 +1,6 @@
-from random import randint
 
 from src.GraphInterface import GraphInterface
 from Edge import Edge
-from GLocation import GLocation
 from Node import Node
 
 
