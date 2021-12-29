@@ -23,6 +23,7 @@ class TestGraphAlgo(TestCase):
         graph_algo.load_from_json(file)
         self.assertFalse(graph_algo.is_connected())
 
+
     def test_shortest_path(self):
         g = self.simple_graph_generate()
         ga = GraphAlgo(g)
