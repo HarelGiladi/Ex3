@@ -1,0 +1,138 @@
+   @startuml
+'https://plantuml.com/class-diagram
+
+class GraphInterface {
+==
++v_size
++e_size
++get_all_v
++all_in_edges_of_node
++all_out_edges_of_node
++get_mc
++add_edge
++add_node
++remove_node
++remove_edge
+}
+class GraphAlgoInterface{
+==
++get_graph
++load_from_json
++save_to_json
++shortest_path
++centerPoint
++TSP
++plot_graph
+}
+class Edge{
+-src
+-dst
+-weight
+-info
+-tag
+==
++str
++repr
+}
+class GLocation{
+-x
+-y
+-z
+==
++distance
++repr
++str
+
+}
+class GraphAlgo{
+-DiGraph
+==
++get_graph
++load_from_json
++save_to_json
++is_connected
++shortest_path
++TSP
++centerPoint
++plot_graph
++repr
+
+}
+class DiGraph{
+-nodes
+-edges
+-SizeOfEdge
+-MC
+==
++v_size
++e_size
++get_all_v
++all_in_edges_of_node
++all_out_edges_of_node
++get_mc
++add_edge
++add_node
++getnode
++remove_node
++remove_edge
+}
+class Node{
+-key
+-location
+-weight
+-info
+-tag
+==
++repr
+}
+class PriorityQ{
+-queue
+==
++str
++repr
++is_empty
++insert
++size
++delte
+}
+class main{
+==
++check0
++check1
++check2
++check3
+}
+
+GraphAlgo <|-- main
+DiGraph <|-- main
+
+GLocation <|-- Node
+
+math <|-- GLocation
+random <|-- GLocation
+
+ GraphInterface<|-- DiGraph
+ Edge<|-- DiGraph
+ Node<|-- DiGraph
+
+json <|-- GraphAlgo
+sys <|-- GraphAlgo
+random <|-- GraphAlgo
+copy <|-- GraphAlgo
+PriorityQ <|-- GraphAlgo
+GraphAlgoInterface <|-- GraphAlgo
+Node <|-- GraphAlgo
+GraphInterface<|-- GraphAlgo
+matplotlib <|-- GraphAlgo
+
+
+List <|-- GraphAlgoInterface
+GraphInterface <|-- GraphAlgoInterface
+
+
+
+
+
+
+
+@enduml
